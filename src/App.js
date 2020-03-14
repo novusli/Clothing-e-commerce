@@ -4,11 +4,13 @@ import './App.css';
 
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
+import Header from './components/header/header.component';
 
 
 function App() {
     return (
         <div>
+        <Header />
         {/* Switch means ONLY render one of the Route inside (follow top-to-bottom order). */}
             <Switch>
                 {/* exact means if the path to be exactly same, not just including. 
