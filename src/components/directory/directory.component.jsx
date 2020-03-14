@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './directory.scss';
 
 import MenuItem from '../menu-item/menu-item.component';
 
-class Directory extends Component {
+class Directory extends React.Component {
     constructor(props) {
         super(props);
         
