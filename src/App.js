@@ -5,6 +5,7 @@ import './App.css';
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
+import SignInAndRegisterPage from './pages/sign-in-and-register/sign-in-and-register.component';
 
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
                 {/* exact means if the path to be exactly same, not just including. 
                 If exact={false}, that means if the path includes '/', then render the page. */}
                 <Route exact path='/' component={ HomePage } />
-                <Route path='/shop' component={ ShopPage } />
+                <Route exact path='/shop' component={ ShopPage } />
+                <Route exact path='/signin' component={ SignInAndRegisterPage } />
                 {/* ":" means dynamicly changing value, and is accessed as params for the component  */}
                 {/* <Route path='/hats/:hatsId' component={ HatsPage } /> */}
             </Switch>

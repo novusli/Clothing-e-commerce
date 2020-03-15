@@ -7,12 +7,10 @@ import CollectionPreview from '../../components/collection-preview/collecion-pre
 class ShopPage extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             collections: SHOP_DATA
         }
     }
-
     render() {
         const { collections } = this.state;
         return(
