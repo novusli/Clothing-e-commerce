@@ -1,5 +1,8 @@
 import React from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+
 import './App.css';
 
 import HomePage from './pages/homepage/homepage.component';
@@ -7,36 +10,30 @@ import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SignInAndRegisterPage from './pages/sign-in-and-register/sign-in-and-register.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { setCurrentUser } from './redux/user/user.actions';
 
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentUser: null
-        }
-    }
+    
     unsubscribeFromAuth = null
 
     componentDidMount() {
+        const { setCurrentUser } = this.props;
+
         // Open Subscription
         this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
             if (userAuth) {
                 const userRef = await createUserProfileDocument(userAuth);
                 userRef.onSnapshot(snapShot => {
-                    this.setState({
-                        currentUser: {
-                            id: snapShot.id,
-                            // ...snapShot.data() is an object containing the data
-                            ...snapShot.data()
-                        }
-                    });
+                    setCurrentUser ({
+                        id: snapShot.id,
+                        // ...snapShot.data() is an object containing the data
+                        ...snapShot.data()
+                    })
                 });  
             }
             else {
-                this.setState({
-                    currentUser:userAuth
-                });
+                setCurrentUser(userAuth);
             }
         })
     }
@@ -48,7 +45,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-            <Header currentUser={ this.state.currentUser } />
+            <Header />
             {/* Switch means ONLY render one of the Route inside (follow top-to-bottom order). */}
                 <Switch>
                     {/* exact means if the path to be exactly same, not just including. 
@@ -66,4 +63,8 @@ class App extends React.Component {
     
 }
 
-export default App;
+const mapDispatchToPros = dispatch => ({
+    setCurrentUser: user => dispatch(setCurrentUser(user))
+});
+
+export default connect(null, mapDispatchToPros)(App);
